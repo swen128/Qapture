@@ -35,14 +35,15 @@ class App(QWidget):
     def mouseReleaseEvent(self, event):
         self.rubberBand.hide()
         rect = self.get_geometry()
-        self.window = ss2(rect)
+        self.window = ss(rect)
         self.window.show()
         self.close()
 
 
-def take_ss(x, y, width, height):
+def take_ss(rect):
     screen = QGuiApplication.primaryScreen()
     desktop = QApplication.desktop().winId()
+    x, y, width, height = rect.getRect()
     img = screen.grabWindow(desktop, x, y, width, height)
     return img
 
@@ -52,15 +53,11 @@ def ss_window(pixmap):
     label.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
     return label
 
-def ss(x, y, width, height):
-    pixmap = take_ss(x, y, width, height)
+def ss(rect):
+    pixmap = take_ss(rect)
     label = ss_window(pixmap)
-    label.move(x, y)
+    label.move(rect.topLeft())
     return label
-
-def ss2(rect):
-    x, y, width, height = rect.getRect()
-    return ss(x, y, width, height)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
