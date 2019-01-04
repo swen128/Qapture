@@ -1,9 +1,11 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QRubberBand
 from PyQt5.QtGui import QPixmap, QGuiApplication, QPalette, QColor, QPainter
-from PyQt5.QtCore import Qt, QRect
+from PyQt5.QtCore import Qt, QRect, pyqtSignal
 
-class App(QWidget):
+class AreaSelector(QWidget):
+    areaSelected = pyqtSignal(['QRect'])
+
     def __init__(self):
         super().__init__()
         self.rubberBand = QRubberBand(QRubberBand.Rectangle, parent = self)
@@ -11,6 +13,10 @@ class App(QWidget):
         self.setAttribute(Qt.WA_TranslucentBackground, True)
         self.setWindowState(Qt.WindowFullScreen)
         self.setCursor(Qt.CrossCursor)
+
+    def exec(self, callback):
+        self.areaSelected.connect(callback)
+        self.show()
 
     def paintEvent(self, event):
         p = QPainter(self)
@@ -36,31 +42,32 @@ class App(QWidget):
     def mouseReleaseEvent(self, event):
         rect = self.rubberBand.geometry()
         self.close()
-        self.window = ss(rect)
-        self.window.show()
+        self.signal.emit(rect)
 
 
-def take_ss(rect):
+class Qapture(QLabel):
+    def __init__(self):
+        super().__init__()
+        self.setWindowFlags(Qt.WindowStaysOnTopHint)
+
+    def display_ss(self, rect):
+        pixmap = screen_shot(rect)
+        self.setPixmap(pixmap)
+        self.setGeometry(rect)
+        self.show()
+
+
+def screen_shot(rect):
     screen = QGuiApplication.primaryScreen()
     desktop = QApplication.desktop().winId()
     x, y, width, height = rect.getRect()
     img = screen.grabWindow(desktop, x, y, width, height)
     return img
 
-def ss_window(pixmap):
-    label = QLabel()
-    label.setPixmap(pixmap)
-    label.setWindowFlags(Qt.WindowStaysOnTopHint)
-    return label
-
-def ss(rect):
-    pixmap = take_ss(rect)
-    label = ss_window(pixmap)
-    label.move(rect.topLeft())
-    return label
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    ex = App()
-    ex.show()
+    qapture = Qapture()
+    selector = AreaSelector()
+    selector.exec(callback = qapture.display_ss)
     sys.exit(app.exec_())
