@@ -21,22 +21,13 @@ class AreaSelector(QWidget):
         p = QPainter(self)
         p.fillRect(self.rect(), QColor(0, 0, 0, 1))
 
-    def set_geometry(self, top_left, bottom_right):
-        rect = QRect(top_left, bottom_right)
-        self.rubberBand.setGeometry(rect)
-
-    def set_bottom_right(self, bottom_right):
-        top_left = self.origin
-        self.set_geometry(top_left, bottom_right)
-
     def mousePressEvent(self, event):
         self.origin = event.pos()
-        self.set_geometry(self.origin, self.origin)
         self.rubberBand.show()
 
     def mouseMoveEvent(self, event):
-        pos = event.pos()
-        self.set_bottom_right(pos)
+        rect = QRect(self.origin, event.pos())
+        self.rubberBand.setGeometry(rect)
 
     def mouseReleaseEvent(self, event):
         rect = self.rubberBand.geometry()
