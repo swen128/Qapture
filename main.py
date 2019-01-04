@@ -18,9 +18,6 @@ class App(QWidget):
         p = QPainter(self)
         p.fillRect(self.rect(), QColor(0, 0, 0, 1))
 
-    def get_geometry(self):
-        return self.rubberBand.geometry()
-
     def set_geometry(self, top_left, bottom_right):
         rect = QRect(top_left, bottom_right)
         self.rubberBand.setGeometry(rect)
@@ -39,7 +36,7 @@ class App(QWidget):
         self.set_bottom_right(pos)
 
     def mouseReleaseEvent(self, event):
-        rect = self.get_geometry()
+        rect = self.rubberBand.geometry()
         self.close()
         self.window = ss(rect)
         self.window.show()
