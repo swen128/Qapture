@@ -10,6 +10,7 @@ class AreaSelector(QWidget):
     def __init__(self):
         super().__init__()
         self.rubberBand = QRubberBand(QRubberBand.Rectangle, parent = self)
+        self.setWindowFlag(Qt.Tool)
         self.setWindowFlag(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
         self.setWindowState(Qt.WindowFullScreen)
