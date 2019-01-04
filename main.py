@@ -12,7 +12,6 @@ class App(QWidget):
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground, True)
         self.setWindowState(QtCore.Qt.WindowFullScreen)
-        self.show()
 
     def paintEvent(self, event):
         p = QPainter(self)
@@ -68,4 +67,5 @@ def ss(rect):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     ex = App()
+    ex.show()
     sys.exit(app.exec_())
