@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QRubberBand
-from PyQt5.QtGui import QPixmap, QGuiApplication
+from PyQt5.QtGui import QPixmap, QGuiApplication, QPalette, QColor, QPainter
 from PyQt5 import QtCore
 
 class App(QWidget):
@@ -9,8 +9,14 @@ class App(QWidget):
         shape = QRubberBand.Rectangle
         parent = self
         self.rubberBand = QRubberBand(shape, parent)
-        self.setWindowOpacity(0.01)
-        self.showFullScreen()
+        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground, True)
+        self.setWindowState(QtCore.Qt.WindowFullScreen)
+        self.show()
+
+    def paintEvent(self, event):
+        p = QPainter(self)
+        p.fillRect(self.rect(), QColor(0, 0, 0, 1))
 
     def get_geometry(self):
         return self.rubberBand.geometry()
