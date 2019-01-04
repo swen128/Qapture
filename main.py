@@ -12,6 +12,7 @@ class App(QWidget):
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground, True)
         self.setWindowState(QtCore.Qt.WindowFullScreen)
+        self.setCursor(QtCore.Qt.CrossCursor)
 
     def paintEvent(self, event):
         p = QPainter(self)
