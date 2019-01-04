@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QRubberBand
 from PyQt5.QtGui import QPixmap, QGuiApplication, QPalette, QColor, QPainter
-from PyQt5 import QtCore
+from PyQt5.QtCore import Qt, QRect
 
 class App(QWidget):
     def __init__(self):
@@ -9,10 +9,10 @@ class App(QWidget):
         shape = QRubberBand.Rectangle
         parent = self
         self.rubberBand = QRubberBand(shape, parent)
-        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        self.setAttribute(QtCore.Qt.WA_TranslucentBackground, True)
-        self.setWindowState(QtCore.Qt.WindowFullScreen)
-        self.setCursor(QtCore.Qt.CrossCursor)
+        self.setWindowFlag(Qt.FramelessWindowHint)
+        self.setAttribute(Qt.WA_TranslucentBackground, True)
+        self.setWindowState(Qt.WindowFullScreen)
+        self.setCursor(Qt.CrossCursor)
 
     def paintEvent(self, event):
         p = QPainter(self)
@@ -22,7 +22,7 @@ class App(QWidget):
         return self.rubberBand.geometry()
 
     def set_geometry(self, top_left, bottom_right):
-        rect = QtCore.QRect(top_left, bottom_right)
+        rect = QRect(top_left, bottom_right)
         self.rubberBand.setGeometry(rect)
 
     def set_bottom_right(self, bottom_right):
@@ -56,7 +56,7 @@ def take_ss(rect):
 def ss_window(pixmap):
     label = QLabel()
     label.setPixmap(pixmap)
-    label.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
+    label.setWindowFlags(Qt.WindowStaysOnTopHint)
     return label
 
 def ss(rect):
