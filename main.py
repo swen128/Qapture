@@ -33,11 +33,11 @@ class App(QWidget):
         self.set_bottom_right(pos)
 
     def mouseReleaseEvent(self, event):
-        self.rubberBand.hide()
         rect = self.get_geometry()
+        self.rubberBand.hide()
+        self.close()
         self.window = ss(rect)
         self.window.show()
-        self.close()
 
 
 def take_ss(rect):
