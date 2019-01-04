@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QWidget, QRubberBand
 from PyQt5.QtGui import QColor, QPainter
 from PyQt5.QtCore import Qt, QRect, pyqtSignal, QPoint
+from utils import q_rect
 
 class AreaSelector(QWidget):
     areaSelected = pyqtSignal(['QRect'])
@@ -27,7 +28,7 @@ class AreaSelector(QWidget):
         self.rubberBand.show()
 
     def mouseMoveEvent(self, event):
-        rect = QRect(self.origin, event.pos())
+        rect = q_rect(self.origin, event.pos())
         self.rubberBand.setGeometry(rect)
 
     def mouseReleaseEvent(self, event):
