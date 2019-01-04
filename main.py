@@ -6,9 +6,7 @@ from PyQt5.QtCore import Qt, QRect
 class App(QWidget):
     def __init__(self):
         super().__init__()
-        shape = QRubberBand.Rectangle
-        parent = self
-        self.rubberBand = QRubberBand(shape, parent)
+        self.rubberBand = QRubberBand(QRubberBand.Rectangle, parent = self)
         self.setWindowFlag(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
         self.setWindowState(Qt.WindowFullScreen)
