@@ -40,7 +40,6 @@ class App(QWidget):
 
     def mouseReleaseEvent(self, event):
         rect = self.get_geometry()
-        self.rubberBand.hide()
         self.close()
         self.window = ss(rect)
         self.window.show()
