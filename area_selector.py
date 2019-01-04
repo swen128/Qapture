@@ -1,9 +1,10 @@
 from PyQt5.QtWidgets import QWidget, QRubberBand
 from PyQt5.QtGui import QColor, QPainter
-from PyQt5.QtCore import Qt, QRect, pyqtSignal
+from PyQt5.QtCore import Qt, QRect, pyqtSignal, QPoint
 
 class AreaSelector(QWidget):
     areaSelected = pyqtSignal(['QRect'])
+    origin = QPoint()
 
     def __init__(self):
         super().__init__()
