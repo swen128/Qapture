@@ -27,6 +27,7 @@ def screen_shot(rect):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     qapture = Qapture()
+    qapture.setWindowTitle("Qapture")
     selector = AreaSelector()
     selector.exec(callback = qapture.display_ss)
     sys.exit(app.exec_())
